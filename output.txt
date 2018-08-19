@@ -1,0 +1,17 @@
+Name:                     spring-petclinic-docker-build
+Namespace:                spring-petclinic-docker-build
+Labels:                   run=spring-petclinic-docker-build
+Annotations:              <none>
+Selector:                 run=spring-petclinic-docker-build
+Type:                     LoadBalancer
+IP:                       10.0.0.209
+Port:                     <unset>  8092/TCP
+TargetPort:               8080/TCP
+NodePort:                 <unset>  30417/TCP
+Endpoints:                10.2.3.21:8080
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:
+  Type    Reason                Age   From                Message
+  ----    ------                ----  ----                -------
+  Normal  EnsuringLoadBalancer  1m    service-controller  Ensuring load balancer
