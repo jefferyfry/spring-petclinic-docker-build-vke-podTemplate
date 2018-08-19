@@ -31,7 +31,7 @@ pipeline {
         }
       }
     }
-    stage('Deploy to Stagin Server') {
+    stage('Deploy to Staging Server') {
       steps {
         container('vke-kubectl'){
           withCredentials([usernamePassword(credentialsId: 'vke', passwordVariable: 'token', usernameVariable: 'org')]) {
