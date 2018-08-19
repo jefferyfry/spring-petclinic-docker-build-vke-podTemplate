@@ -36,7 +36,7 @@ pipeline {
         container('vke-kubectl'){
           withCredentials([usernamePassword(credentialsId: 'vke', passwordVariable: 'token', usernameVariable: 'org')]) {
             sh '''
-                 vke account login -t ${env.org} -r${env.token}
+                 vke account login -t ${env.org} -r ${env.token}
                  vke cluster merge-kubectl-auth cloudbees-core-vke-priv
                  kubectl create namespace spring-petclinic-docker-build
                  kubectl run spring-petclinic-docker-build --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build
