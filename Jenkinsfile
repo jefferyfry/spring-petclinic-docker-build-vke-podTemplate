@@ -34,8 +34,8 @@ pipeline {
     stage('Deploy to Staging Server') {
       steps {
         container('vke-kubectl'){
-          withCredentials([usernamePassword(credentialsId: 'vke', passwordVariable: 'token', usernameVariable: 'org')]) {
-            sh "vke account login -t ${env.org} -r ${env.token}"
+          withCredentials([usernamePassword(credentialsId: 'vke', passwordVariable: 'token')]) {
+            sh "vke account login -t 98c89a30-8017-4ba4-a981-2c873475d841 -r ${env.token}"
             sh '''
                  vke cluster merge-kubectl-auth cloudbees-core-vke-priv
                  kubectl create namespace spring-petclinic-docker-build
