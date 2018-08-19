@@ -38,6 +38,8 @@ pipeline {
             sh "vke account login -t 98c89a30-8017-4ba4-a981-2c873475d841 -r ${env.token}"
             sh '''
                  vke cluster merge-kubectl-auth cloudbees-core-vke-priv
+                 kubectl delete namespace spring-petclinic-docker-build || true
+                 sleep 5
                  kubectl create namespace spring-petclinic-docker-build
                  kubectl run spring-petclinic-docker-build --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build
                  kubectl expose deployment spring-petclinic-docker-build --type=LoadBalancer --port 8092 --target-port 8080 --namespace spring-petclinic-docker-build
