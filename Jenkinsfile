@@ -41,8 +41,8 @@ pipeline {
                  kubectl create namespace spring-petclinic-docker-build
                  kubectl run spring-petclinic-docker-build --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build
                  kubectl expose deployment spring-petclinic-docker-build --type=LoadBalancer --port 8092 --target-port 8080 --namespace spring-petclinic-docker-build
-                 sleep 10
-                 url=$(kubectl describe service spring-petclinic-docker-build --namespace spring-petclinic-docker-build | grep spring-petclinic-docker-build. | awk -F: \'{gsub (\" \", \"\", $0); print \"http://\"$2\":8092\"}\')
+                 while [ -z "$url" ]; do url=$(kubectl describe service spring-petclinic-docker-build --namespace spring-petclinic-docker-build | grep spring-petclinic-docker-build. | awk -F: \'{gsub (\" \", \"\", $0); print \"http://\"$2\":8092\"}\'); sleep 2; done
+
                  echo "$url"
             '''
           }
