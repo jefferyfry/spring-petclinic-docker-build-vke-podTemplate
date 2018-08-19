@@ -34,7 +34,7 @@ pipeline {
     stage('Deploy to Staging Server') {
       steps {
         container('vke-kubectl'){
-          withCredentials([usernamePassword(credentialsId: 'vke', passwordVariable: 'token')]) {
+          withCredentials([string(credentialsId: 'vkeToken', variable: 'token')]) {
             sh "vke account login -t 98c89a30-8017-4ba4-a981-2c873475d841 -r ${env.token}"
             sh '''
                  vke cluster merge-kubectl-auth cloudbees-core-vke-priv
