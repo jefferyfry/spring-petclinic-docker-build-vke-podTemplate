@@ -38,14 +38,14 @@ pipeline {
             sh "vke account login -t 98c89a30-8017-4ba4-a981-2c873475d841 -r ${env.token}"
             sh '''
                  vke cluster merge-kubectl-auth cloudbees-core-vke-priv
-                 kubectl delete namespace spring-petclinic-docker-build1 || true
+                 kubectl delete namespace spring-petclinic-docker-build || true
                  sleep 5
-                 kubectl create namespace spring-petclinic-docker-build1
-                 kubectl run spring-petclinic-docker-build1 --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build1
-                 kubectl expose deployment spring-petclinic-docker-build1 --type=LoadBalancer --port 8092 --target-port 8080 --namespace spring-petclinic-docker-build1
-                 
-                 echo "Spring PetClinic Launched!"
-                 echo "http://spring-petclinic-docker-build.cloudbees-core-vke-priv-79169e32-a1be-11e8-84b1-06eff62c389e.98c89a30-8017-4ba4-a981-2c873475d841.vke-user.com:8092/"
+                 kubectl create namespace spring-petclinic-docker-build
+                 kubectl run spring-petclinic-docker-build --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build
+                 kubectl expose deployment spring-petclinic-docker-build --type=LoadBalancer --port 8092 --target-port 8080 --namespace spring-petclinic-docker-build
+                 while [ -z "$url" ]; do url=$(kubectl describe service spring-petclinic-docker-build --namespace spring-petclinic-docker-build | grep spring-petclinic-docker-build. | awk -F: \'{gsub (\" \", \"\", $0); print \"http://\"$2\":8092\"}\'); sleep 2; done
+
+                 echo "$url"
             '''
           }
         }
