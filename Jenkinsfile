@@ -43,7 +43,6 @@ pipeline {
                  kubectl create namespace spring-petclinic-docker-build
                  kubectl run spring-petclinic-docker-build --image=jefferyfry/spring-petclinic:latest --port 8080 --namespace spring-petclinic-docker-build
                  kubectl expose deployment spring-petclinic-docker-build --type=LoadBalancer --port 8092 --target-port 8080 --namespace spring-petclinic-docker-build
-                 sleep 10
                  echo "Spring PetClinic Launched!"
                  echo "http://spring-petclinic-docker-build.cloudbees-core-vke-cc5105c4-9b74-11e8-b335-02768b50f852.98c89a30-8017-4ba4-a981-2c873475d841.vke-user.com:8092"
             '''
